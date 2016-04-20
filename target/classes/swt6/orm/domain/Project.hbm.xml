@@ -11,8 +11,8 @@
     <property name="name"></property>
     
     <set name="members" table="ProjectEmployee" cascade="save-update">
-    	<key column="projectId"/>
-    	<many-to-many class="Employee" column="employeeId"/>
+    	<key column="project_id"/>
+    	<many-to-many class="Employee" column="employee_id"/>
     </set>
     
     <set name="modules" inverse="true" fetch="join" lazy="false" cascade="all">
@@ -20,5 +20,13 @@
     	<one-to-many class="Module"/>
     </set>
 
+
+	<many-to-one name="leader"
+				 class="Employee"
+				 column="leader_id"
+				 cascade="save-update,merge"
+				 fetch="join"
+				 lazy="false"
+			     not-null="false" />
   </class>
 </hibernate-mapping>

@@ -51,8 +51,24 @@ public class HibernateWorkLogManager {
 			if (tx != null)
 				tx.rollback();
 		}
+	}
+	
+	private static void saveProject(Project project, Employee leader) {
+		Session session = HibernateUtil.getCurrentSession();
+		Transaction tx = null;
 		
-		saveEntity(module);
+		try {
+			tx = session.beginTransaction();
+			leader = (Employee)session.merge(leader);
+			project.attachLeader(leader);
+			session.saveOrUpdate(project);
+			tx.commit(); // session is closed automatically
+		} catch (Exception e) {
+			// error handling code
+
+			if (tx != null)
+				tx.rollback();
+		}
 	}
 
 	private static <T> void saveEntity(T entity) {
@@ -178,8 +194,11 @@ public class HibernateWorkLogManager {
 
 		empl = (Employee) session.merge(empl);
 		for (Project project : projects) {
+			project = (Project) session.merge(project);
 			empl.addProject(project);
 		}
+		
+		session.saveOrUpdate(empl);
 
 		tx.commit();
 
@@ -352,19 +371,24 @@ public class HibernateWorkLogManager {
 			te.setRenter("Microsoft");
 			te.setStartDate(DateUtil.getDate(2006, 3, 1));
 			te.setEndDate(DateUtil.getDate(2006, 4, 1));
+			
+			PermanentEmployee empl3 = new PermanentEmployee("Heinz", "Dobler", DateUtil.getDate(1965, 10, 13));
+			empl3.setAddress(new Address("4231", "Hagenberg","Hauptstraße 14"));
+			empl3.setSalary(6000);
+			saveEntity(empl3);
 
 			Project p1 = new Project("Office");
 			Project p2 = new Project("Enterprise Server");
 			System.out.println("----- saveProject -----");
-			saveEntity(p1);
-			saveEntity(p2);
+			saveProject(p1, empl3);
+			saveProject(p2, empl3);
 
 			Phase proto = new Phase("Prototype");
 			Phase dev = new Phase("Development");
 			Phase mantainance = new Phase("Maintainance");
 
 			Module mod1 = new Module("First module");
-			saveModule(mod1, p1);
+			saveModule(mod1, p2);
 			
 			LogbookEntry entry1 = new LogbookEntry("Analyse", DateUtil.getTime(10, 15), DateUtil.getTime(15, 30), proto, mod1);
 			LogbookEntry entry2 = new LogbookEntry("Implementierung", DateUtil.getTime(8, 45),DateUtil.getTime(17, 15), dev, mod1);

@@ -58,7 +58,7 @@ public class LogbookEntry implements Serializable {
 	// setEmployee is also invoked when logbook entries are being
 	// loaded lazily. This causes an exception.
 	public void setEmployee(Employee employee) {
-		attachEmployee(employee);
+		this.employee = employee;
 	}
 
 	public void attachEmployee(Employee employee) {
@@ -101,7 +101,7 @@ public class LogbookEntry implements Serializable {
 	}
 
 	public void setPhaseId(Phase phaseId) {
-		attachPhase(phaseId);
+		this.phaseId = phaseId;
 	}
 	
 	public void attachPhase(Phase phase) {
@@ -129,7 +129,7 @@ public class LogbookEntry implements Serializable {
 	}
 
 	public void setModuleId(Module moduleId) {
-		attachModule(moduleId);
+		this.moduleId = moduleId;
 	}
 	
 	public void attachModule(Module module) {

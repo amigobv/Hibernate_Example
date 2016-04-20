@@ -12,9 +12,38 @@ public class Project implements Serializable {
 	// private Employee manager;
 	private Set<Employee> members = new HashSet<>();
 	private Set<Module> modules = new HashSet<>();
+	private Employee leader;
 
 	public Long getId() {
 		return id;
+	}
+
+	public Employee getLeader() {
+		return leader;
+	}
+
+	public void setLeader(Employee leader) {
+		this.leader = leader;
+	}
+	
+	public void attachLeader(Employee leader) {
+		if (leader == null)
+			throw new IllegalArgumentException("Cannot attach NULL leader!");
+		
+		if (this.leader != null) {
+			this.leader.getProjects().remove(this);
+		}
+
+		leader.getProjects().add(this);
+		this.leader = leader;
+	}
+	
+	public void detachLeader() {
+		if (leader != null) {
+			leader.getProjects().remove(this);
+		}
+		
+		leader = null;
 	}
 
 	public Project() {

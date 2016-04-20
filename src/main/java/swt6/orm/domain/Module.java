@@ -66,7 +66,7 @@ public class Module implements Serializable {
 	}
 
 	public void setProjectId(Project projectId) {
-		attachProject(projectId);
+		this.projectId = projectId;
 	}
 	
 	public void attachProject(Project project) {
