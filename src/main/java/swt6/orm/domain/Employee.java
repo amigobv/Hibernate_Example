@@ -92,7 +92,7 @@ public class Employee implements Serializable {
 			entry.getEmployee().getLogbookEntries().remove(entry);
 		}
 
-		getLogbookEntries().add(entry);
+		this.logbookEntries.add(entry);
 		entry.attachEmployee(this);
 	}
 

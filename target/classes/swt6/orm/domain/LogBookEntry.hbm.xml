@@ -21,7 +21,7 @@
 		<many-to-one name="moduleId" 
 					 class="Module"
 					 column="module_id"
-					 cascade="save-update,merge"
+					 cascade="merge"
 					 fetch="join"
 					 lazy="false"
 					 not-null="false"/>	
@@ -29,7 +29,7 @@
 		<many-to-one name="phaseId" 
 					 class="Phase"
 					 column="phase_id"
-					 cascade="save-update,merge"
+					 cascade="merge"
 					 fetch="join"
 					 lazy="false"
 					 not-null="false"/>					 				 

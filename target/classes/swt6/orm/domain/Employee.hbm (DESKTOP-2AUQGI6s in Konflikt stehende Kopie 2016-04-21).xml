@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="swt6.orm.domain">
+
+  <class name="Employee" discriminator-value="E">
+    <id name="id">
+    	<generator class="native"></generator>
+    </id>
+        
+    <discriminator column="employee_type" type="string"></discriminator>    
+    <property name="firstName"></property>
+    <property name="lastName"></property>
+    <property name="dateOfBirth" type="date"></property>
+    
+    <set name="LogbookEntries" inverse="true" fetch="join" lazy="false" cascade="all">
+    	<key column="employee_id"/>
+    	
+    	<one-to-many class="LogbookEntry"/>
+    </set>
+    
+    <component name="address" class="Address">
+    	<property name="zipCode"></property>
+    	<property name="city"></property>
+    	<property name="street"></property>
+    </component>
+    
+    <!-- table per concrete class  -->
+    <union-subclass name="PermanentEmployee">
+      <property name="salary" />
+    </union-subclass>
+    <union-subclass name="TemporaryEmployee">
+      <property name="hourlyRate" />
+      <property name="renter" />
+      <property name="startDate" type="date" />
+      <property name="endDate" type="date" />
+    </union-subclass>
+     
+   
+ 	<!-- table per class hierarchy (use this)--> 
+<!-- 	<subclass name="PermanentEmployee" discriminator-value="P"> -->
+<!-- 		<property name="salary" /> -->
+<!-- 	</subclass> -->
+<!-- 	<subclass name="TemporaryEmployee" discriminator-value="T"> -->
+<!-- 		<property name="hourlyRate" /> -->
+<!-- 		<property name="renter" /> -->
+<!-- 		<property name="startDate" type="date" /> -->
+<!-- 		<property name="endDate" type="date" /> -->
+<!-- 	</subclass> -->
+    
+    <!-- table per subclass 
+    <joined-subclass name="PermanentEmployee">
+    	<key column="id" />
+    	<property name="salary" />
+    </joined-subclass>
+    <joined-subclass name="TemporaryEmployee">
+    	<key column="id" />
+    	<property name="hourlyRate" />
+    	<property name="renter" />
+    	<property name="startDate" type="date" />
+    	<property name="endDate" type="date" />
+    </joined-subclass>
+    -->
+
+  </class>
+</hibernate-mapping>
