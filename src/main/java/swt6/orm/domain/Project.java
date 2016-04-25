@@ -82,6 +82,15 @@ public class Project implements Serializable {
 		empl.getProjects().add(this);
 		members.add(empl);
 	}
+	
+	public void removeMember(Employee empl) {
+		if (empl == null) {
+			throw new IllegalArgumentException("Cannot add NULL employee!");
+		}
+
+		members.remove(empl);
+		empl.getProjects().remove(this);
+	}
 
 	public Set<Module> getModules() {
 		return modules;

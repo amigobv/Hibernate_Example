@@ -19,7 +19,7 @@
     	<one-to-many class="LogbookEntry"/>
     </set>
     
-    <set name="projects" table="ProjectEmployee" inverse="true" cascade="save-update">
+    <set name="projects" table="ProjectEmployee" inverse="true" fetch="join" lazy="false" cascade="save-update">
     	 <key column="employee_id"/>
     	 <many-to-many class="Project" column="project_id"/>  
     </set>

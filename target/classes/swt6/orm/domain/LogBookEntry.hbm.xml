@@ -13,7 +13,7 @@
 		<many-to-one name="employee"
 					 class="Employee"
 					 column="employee_id"
-					 cascade="save-update,merge"
+					 cascade="save-update"
 					 fetch="join"
 					 lazy="false"
 					 not-null="false"/>
@@ -21,7 +21,7 @@
 		<many-to-one name="moduleId" 
 					 class="Module"
 					 column="module_id"
-					 cascade="merge"
+					 cascade=",merge"
 					 fetch="join"
 					 lazy="false"
 					 not-null="false"/>	

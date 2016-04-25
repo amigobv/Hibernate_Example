@@ -18,7 +18,7 @@
     <many-to-one name="projectId" 
     			 class="Project"
     			 column="project_id"
-    			 cascade="save-update,merge"
+    			 cascade="save-update"
     			 fetch="join"
     			 lazy="false"
     			 not-null="false"/>

@@ -10,12 +10,12 @@
     
     <property name="name"></property>
     
-    <set name="members" table="ProjectEmployee" cascade="save-update">
+    <set name="members" table="ProjectEmployee" cascade="save-update" fetch="join" lazy="false">
     	<key column="project_id"/>
     	<many-to-many class="Employee" column="employee_id"/>
     </set>
     
-    <set name="modules" inverse="true" fetch="join" lazy="false" cascade="all">
+    <set name="modules" inverse="true" fetch="join" lazy="false" cascade="save-update">
     	<key column="project_id"/>
     	<one-to-many class="Module"/>
     </set>

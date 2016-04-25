@@ -326,7 +326,6 @@ public class HibernateWorkLogManager {
 			session.delete(project);
 		}
 
-		empl.detach();
 		session.delete(empl);
 
 		tx.commit();

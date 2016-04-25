@@ -3,6 +3,7 @@ package swt6.orm.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Employee implements Serializable {
@@ -89,7 +90,7 @@ public class Employee implements Serializable {
 		}
 
 		if (entry.getEmployee() != null) {
-			entry.getEmployee().getLogbookEntries().remove(entry);
+			entry.getEmployee().logbookEntries.remove(entry);
 		}
 
 		this.logbookEntries.add(entry);
@@ -104,8 +105,16 @@ public class Employee implements Serializable {
 		if (entry.getEmployee() != this)
 			throw new IllegalArgumentException("can't remove logbook entry of another employee!");
 
-		getLogbookEntries().remove(entry);
 		logbookEntries.remove(entry);
+	}
+	
+	public void removeAllLogbookEntries() {
+		Iterator<LogbookEntry> iter = logbookEntries.iterator();
+		
+		while(iter.hasNext()) {
+			iter.remove();
+			iter.next();
+		}
 	}
 
 	public Set<Project> getProjects() {
@@ -132,9 +141,9 @@ public class Employee implements Serializable {
 		project.getMembers().remove(this);
 		projects.remove(project);
 	}
-
-	public void detach() {
-		// TODO add code
+	
+	public void detachProject() {
+		
 	}
 
 	public Set<Project> getLeaders() {
@@ -150,7 +159,7 @@ public class Employee implements Serializable {
 			throw new IllegalArgumentException("NULL Project");
 		}
 		project.attachLeader(this);
-		projects.add(project);
+		leaders.add(project);
 	}
 
 	public void removeLeader(Project project) {
@@ -158,7 +167,16 @@ public class Employee implements Serializable {
 			throw new IllegalArgumentException("NULL Project");
 		}
 		project.detachLeader();
-		projects.remove(project);
+		leaders.remove(project);
+	}
+	
+	public void removeAllLeaders() {
+		Iterator<Project> iter = leaders.iterator();
+		
+		while(iter.hasNext()) {
+			iter.remove();
+			iter.next();
+		}
 	}
 
 	public String toString() {
