@@ -1,6 +1,7 @@
 package swt6.orm.domain;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -159,7 +160,7 @@ public class Employee implements Serializable {
 			throw new IllegalArgumentException("NULL Project");
 		}
 		project.attachLeader(this);
-		leaders.add(project);
+		//leaders.add(project);
 	}
 
 	public void removeLeader(Project project) {
@@ -178,7 +179,25 @@ public class Employee implements Serializable {
 			iter.next();
 		}
 	}
+	@Override
+	public boolean equals(Object obj) {
+		Employee empl = (Employee) obj;
 
+		return firstName.equals(empl.firstName) &&
+			   lastName.equals(empl.lastName) &&
+			   dateOfBirth.equals(empl.dateOfBirth);
+	}
+	
+	@Override
+	public int hashCode() {
+		if (firstName != null && lastName != null && dateOfBirth != null)
+			return firstName.hashCode() + lastName.hashCode() + dateOfBirth.hashCode();
+		
+		return super.hashCode();
+	}
+	
+
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(String.format("%d: %s, %s (%4$td.%4$tm.%4$tY)", id, lastName, firstName, dateOfBirth));

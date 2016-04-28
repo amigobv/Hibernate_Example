@@ -31,10 +31,10 @@ public class Project implements Serializable {
 			throw new IllegalArgumentException("Cannot attach NULL leader!");
 		
 		if (this.leader != null) {
-			this.leader.getProjects().remove(this);
+			this.leader.getLeaders().remove(this);
 		}
 
-		leader.getProjects().add(this);
+		leader.getLeaders().add(this);
 		this.leader = leader;
 	}
 	
@@ -109,6 +109,25 @@ public class Project implements Serializable {
 		this.modules.add(module);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Project proj = (Project) obj;
+
+		return name.equals(proj.name);
+	}
+	
+	@Override
+	public int hashCode() {
+		if (name != null)
+			return name.hashCode();
+		
+		if (id != null)
+			return id.hashCode();
+		
+		return super.hashCode();
+	}
+
+	@Override
 	public String toString() {
 		return name;
 	}

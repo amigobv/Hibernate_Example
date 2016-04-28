@@ -151,6 +151,23 @@ public class LogbookEntry implements Serializable {
 		
 		this.moduleId = null;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		LogbookEntry entry = (LogbookEntry) obj;
+
+		return startTime.equals(entry.startTime) &&
+			   endTime.equals(entry.endTime) &&
+			   activity.equals(entry.activity);
+	}
+	
+	@Override
+	public int hashCode() {
+		if (startTime != null && endTime != null && activity != null)
+			return startTime.hashCode() + endTime.hashCode() + activity.hashCode();
+		
+		return super.hashCode();
+	}
 
 	@Override
 	public String toString() {
